@@ -64,7 +64,7 @@ export default {
         process.env.NODE_API_KEY || ''
       }`,
       accounts: [process.env.BLAST_SEPOLIA_PRIVATE_KEY || ''],
-      gasPrice: 3000000000,
+      gasPrice: 4000000000,
     },
   },
   etherscan: {
