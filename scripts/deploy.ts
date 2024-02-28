@@ -5,14 +5,23 @@ import TransparentUpgradeableProxy from '@openzeppelin/contracts/build/contracts
 import ProxyAdmin from '@openzeppelin/contracts/build/contracts/ProxyAdmin.json';
 
 async function main() {
+  const [deployer] = await ethers.getSigners();
+  console.log('Deploying contracts with the account:', deployer.address);
+
   const wethLabelHex = ethers.encodeBytes32String('WETH');
   const v2Factory = {
-    address: '0xE63D69fFdB211dD747ad8970544043fADE7d20f5',
+    address: '0x3Ff3AC9d1423e6a07cc0891500983F924dDFBffb',
   };
-  console.log(wethLabelHex);
   const v3Factory = {
-    address: '0xbAB2F66B5B3Be3cC158E3aC1007A8DF0bA5d67F4',
+    address: '0xAAe602EE88e9eA8D107b73b1Df8896cF043d392F',
   };
+  const blast = {
+    address: '0x4300000000000000000000000000000000000002',
+  };
+  const blastPoints = {
+    address: '0x2fc95838c71e76ec69ff817983BFf17c710F34E0',
+  };
+
   const weth = await ethers.getContractAt(
     'IERC20',
     '0x4200000000000000000000000000000000000023'
@@ -20,7 +29,12 @@ async function main() {
 
   const swapRouter = await deployContract(
     'SwapRouter',
-    [v3Factory.address, await weth.getAddress()],
+    [
+      v3Factory.address,
+      await weth.getAddress(),
+      blast.address,
+      blastPoints.address,
+    ],
     'SwapRouter',
     {}
   );
@@ -64,6 +78,8 @@ async function main() {
       v3Factory.address,
       await weth.getAddress(),
       await nftPositionDescriptorProxy.getAddress(),
+      blast.address,
+      blastPoints.address,
     ],
     'NonfungiblePositionManager',
     {}
@@ -74,21 +90,31 @@ async function main() {
   // );
   const quoterV2 = await deployContract(
     'QuoterV2',
-    [v3Factory.address, await weth.getAddress()],
+    [
+      v3Factory.address,
+      await weth.getAddress(),
+      blast.address,
+      blastPoints.address,
+    ],
     'QuoterV2',
     {}
   );
   const tickLens = await deployContract('TickLens', [], 'TickLens', {});
   const uniswapInteraceMulticall = await deployContract(
     'UniswapInterfaceMulticall',
-    [],
+    [blast.address, blastPoints.address],
     'UniswapInterfaceMulticall',
     {}
   );
 
   const quoter = await deployContract(
     'Quoter',
-    [v3Factory.address, await weth.getAddress()],
+    [
+      v3Factory.address,
+      await weth.getAddress(),
+      blast.address,
+      blastPoints.address,
+    ],
     'Quoter',
     {}
   );
@@ -98,6 +124,8 @@ async function main() {
       v3Factory.address,
       await weth.getAddress(),
       await nftPositionManager.getAddress(),
+      blast.address,
+      blastPoints.address,
     ],
     'V3Migrator',
     {}
