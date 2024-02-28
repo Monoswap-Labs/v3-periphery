@@ -17,6 +17,7 @@ import "./base/ERC721Permit.sol";
 import "./base/PeripheryValidation.sol";
 import "./base/SelfPermit.sol";
 import "./base/PoolInitializer.sol";
+import './base/BlastConfigure.sol';
 
 /// @title NFT positions
 /// @notice Wraps Uniswap V3 positions in the ERC721 non-fungible token interface
@@ -28,7 +29,8 @@ contract NonfungiblePositionManager is
     PoolInitializer,
     LiquidityManagement,
     PeripheryValidation,
-    SelfPermit
+    SelfPermit,
+    BlastConfigure
 {
     // details about the uniswap position
     struct Position {
@@ -71,10 +73,13 @@ contract NonfungiblePositionManager is
     constructor(
         address _factory,
         address _WETH9,
-        address _tokenDescriptor_
+        address _tokenDescriptor_,
+        address _blast,
+        address _blastPoints
     )
         ERC721Permit("Monoswap V3 Positions NFT-V1", "Mono-V3-POS", "1")
         PeripheryImmutableState(_factory, _WETH9)
+        BlastConfigure(_blast, _blastPoints, msg.sender)
     {
         _tokenDescriptor = _tokenDescriptor_;
     }

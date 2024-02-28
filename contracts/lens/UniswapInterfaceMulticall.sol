@@ -2,8 +2,11 @@
 pragma solidity =0.7.6;
 pragma abicoder v2;
 
+import '../base/BlastConfigure.sol';
+
+
 /// @notice A fork of Multicall2 specifically tailored for the Uniswap Interface
-contract UniswapInterfaceMulticall {
+contract UniswapInterfaceMulticall is BlastConfigure {
     struct Call {
         address target;
         uint256 gasLimit;
@@ -15,6 +18,8 @@ contract UniswapInterfaceMulticall {
         uint256 gasUsed;
         bytes returnData;
     }
+
+    constructor(address _blast, address _blastPoints) BlastConfigure(_blast, _blastPoints, msg.sender) {}
 
     function getCurrentBlockTimestamp() public view returns (uint256 timestamp) {
         timestamp = block.timestamp;

@@ -16,6 +16,7 @@ import './libraries/Path.sol';
 import './libraries/PoolAddress.sol';
 import './libraries/CallbackValidation.sol';
 import './interfaces/external/IWETH9.sol';
+import './base/BlastConfigure.sol';
 
 /// @title Uniswap V3 Swap Router
 /// @notice Router for stateless execution of swaps against Uniswap V3
@@ -25,7 +26,8 @@ contract SwapRouter is
     PeripheryValidation,
     PeripheryPaymentsWithFee,
     Multicall,
-    SelfPermit
+    SelfPermit,
+    BlastConfigure
 {
     using Path for bytes;
     using SafeCast for uint256;
@@ -37,7 +39,7 @@ contract SwapRouter is
     /// @dev Transient storage variable used for returning the computed amount in for an exact output swap.
     uint256 private amountInCached = DEFAULT_AMOUNT_IN_CACHED;
 
-    constructor(address _factory, address _WETH9) PeripheryImmutableState(_factory, _WETH9) {}
+    constructor(address _factory, address _WETH9, address _blast, address _blastPoints) PeripheryImmutableState(_factory, _WETH9) BlastConfigure(_blast, _blastPoints, msg.sender) {}
 
     /// @dev Returns the pool for the given token pair and fee. The pool contract may or may not exist.
     function getPool(

@@ -52,54 +52,26 @@ export default {
       gasPrice: 20000000000,
       accounts: [process.env.GANACHE_PRIVATE_KEY || ''],
     },
-    testnet: {
-      url: 'https://data-seed-prebsc-2-s1.binance.org:8545/',
-      chainId: 97,
-      gasPrice: 5000000000,
-      accounts: [process.env.BNB_TESTNET_PRIVATE_KEY || ''],
-    },
-    scrollTestnet: {
-      url: 'https://sepolia-rpc.scroll.io/',
-      chainId: 534351,
-      accounts: [process.env.SCROLL_TESTNET_PRIVATE_KEY || ''],
-      gasPrice: 1100000000, // 1.1 gwei
-    },
     // for mainnet
     blastMainnet: {
-      url: 'coming end of February',
+      url: `https://rpc.ankr.com/blast/${process.env.NODE_API_KEY || ''}`,
       accounts: [process.env.BLAST_MAINNET_PRIVATE_KEY || ''],
       gasPrice: 1000000000,
     },
     // for Sepolia testnet
     blastSepolia: {
-      url: 'https://sepolia.blast.io',
+      url: `https://rpc.ankr.com/blast_testnet_sepolia/${
+        process.env.NODE_API_KEY || ''
+      }`,
       accounts: [process.env.BLAST_SEPOLIA_PRIVATE_KEY || ''],
-      gasPrice: 1000000000,
+      gasPrice: 4000000000,
     },
   },
   etherscan: {
     apiKey: {
-      scrollTestnet: 'I54U798A8ZAHR2MSRK6QX9H5QAFYWX2K6F',
-      scroll: 'I54U798A8ZAHR2MSRK6QX9H5QAFYWX2K6F',
-      blastSepolia: 'My API key',
+      blastSepolia: 'your API key',
     },
     customChains: [
-      {
-        network: 'scrollTestnet',
-        chainId: 534351,
-        urls: {
-          apiURL: 'https://api-sepolia.scrollscan.com/api',
-          browserURL: 'https://sepolia.scrollscan.com/',
-        },
-      },
-      {
-        network: 'scroll',
-        chainId: 534352,
-        urls: {
-          apiURL: 'https://api.scrollscan.com/api',
-          browserURL: 'https://scrollscan.com/',
-        },
-      },
       {
         network: 'blastSepolia',
         chainId: 168587773,
@@ -110,6 +82,9 @@ export default {
         },
       },
     ],
+  },
+  sourcify: {
+    enabled: false,
   },
   solidity: {
     compilers: [DEFAULT_COMPILER_SETTINGS],
@@ -132,8 +107,5 @@ export default {
       files: ['./test/**/*'],
       verbose: true,
     },
-  },
-  sourcify: {
-    enabled: true,
   },
 };
