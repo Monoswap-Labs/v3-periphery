@@ -9,22 +9,19 @@ async function main() {
   console.log('Deploying contracts with the account:', deployer.address);
 
   const wethLabelHex = ethers.encodeBytes32String('WETH');
-  const v2Factory = {
-    address: '0x3Ff3AC9d1423e6a07cc0891500983F924dDFBffb',
-  };
   const v3Factory = {
-    address: '0xAAe602EE88e9eA8D107b73b1Df8896cF043d392F',
+    address: '0x48d0F09710794313f33619c95147F34458BF7C3b',
   };
   const blast = {
     address: '0x4300000000000000000000000000000000000002',
   };
   const blastPoints = {
-    address: '0x2fc95838c71e76ec69ff817983BFf17c710F34E0',
+    address: '0x2536FE9ab3F511540F2f9e2eC2A805005C3Dd800',
   };
 
   const weth = await ethers.getContractAt(
     'IERC20',
-    '0x4200000000000000000000000000000000000023'
+    '0x4300000000000000000000000000000000000004'
   );
 
   const swapRouter = await deployContract(
@@ -84,10 +81,6 @@ async function main() {
     'NonfungiblePositionManager',
     {}
   );
-  // await erc20.approve(
-  //   await nftPositionManager.getAddress(),
-  //   ethers.parseEther('1000000000')
-  // );
   const quoterV2 = await deployContract(
     'QuoterV2',
     [

@@ -54,9 +54,9 @@ export default {
     },
     // for mainnet
     blastMainnet: {
-      url: `https://rpc.ankr.com/blast/${process.env.NODE_API_KEY || ''}`,
+      url: `https://rpc.ankr.com/blast`,
       accounts: [process.env.BLAST_MAINNET_PRIVATE_KEY || ''],
-      gasPrice: 1000000000,
+      // gasPrice: 1000000000,
     },
     // for Sepolia testnet
     blastSepolia: {
@@ -70,6 +70,7 @@ export default {
   etherscan: {
     apiKey: {
       blastSepolia: 'your API key',
+      blastMainnet: process.env.SCAN_API_KEY || '',
     },
     customChains: [
       {
@@ -79,6 +80,14 @@ export default {
           apiURL:
             'https://api.routescan.io/v2/network/testnet/evm/168587773/etherscan',
           browserURL: 'https://testnet.blastscan.io',
+        },
+      },
+      {
+        network: 'blastMainnet',
+        chainId: 81457,
+        urls: {
+          apiURL: 'https://api.blastscan.io/api',
+          browserURL: 'https://blastscan.io/',
         },
       },
     ],
